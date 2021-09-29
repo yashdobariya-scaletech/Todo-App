@@ -1,0 +1,12 @@
+input {
+  padding: 10px;
+}
+button {
+  padding: 6px 10px;
+  border-radius: 25px;
+  margin: 10px;
+  font-size: 16px;
+}
+.dashbord {
+  border: 2px solid black;
+}

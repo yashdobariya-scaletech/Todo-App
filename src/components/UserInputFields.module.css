@@ -1,0 +1,16 @@
+.inputList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 50px;
+}
+.dashbord {
+  border: 2px solid black;
+  padding: 50px;
+  margin: 10px auto;
+  width: 50%;
+}
+header {
+  font-size: 50px;
+  padding: 30px;
+}
