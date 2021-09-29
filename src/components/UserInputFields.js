@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { ADD_INPUTFIELD_DETAILS } from "../store/action";
 import UserInput from "./UserInput";
 import classes from "./UserInputFields.module.css";
 
-export default class UserInputFields extends Component {
+class UserInputFields extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +14,6 @@ export default class UserInputFields extends Component {
     };
   }
   updateInputField = (e) => {
-    console.log(e.target.value);
     this.setState({
       value: e.target.value,
     });
@@ -21,6 +22,8 @@ export default class UserInputFields extends Component {
     e.preventDefault();
     const inputFields = [...this.state.inputFields];
     const value = this.state.value;
+    this.props.addInputValue(value);
+    console.log(value, "val");
     inputFields.push(value);
     this.setState({
       inputFields,
@@ -30,17 +33,20 @@ export default class UserInputFields extends Component {
 
   removeInputField = (index, e) => {
     e.preventDefault();
-    console.log(index);
     const inputFields = [...this.state.inputFields];
     inputFields.splice(index, 1);
     this.setState({
       inputFields,
+      add: true,
     });
   };
   render() {
     return (
       <div className={classes.dashbord}>
         <header>Todo List</header>
+        <div className={classes.buttonWrap}>
+          <button onClick={this.addInputField}>Add</button>
+        </div>
         <form>
           <UserInput
             type="text"
@@ -59,7 +65,6 @@ export default class UserInputFields extends Component {
               updateInputField={this.updateInputField}
               removeInputField={this.removeInputField}
               addInputField={this.addInputField}
-              addAction={this.state.add}
             />
           ))}
         </form>
@@ -67,3 +72,16 @@ export default class UserInputFields extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  ...state,
+});
+
+const dispatchProps = (dispatch) => {
+  return {
+    addInputValue: (data) =>
+      dispatch({ type: ADD_INPUTFIELD_DETAILS, value: data }),
+  };
+};
+
+export default connect(mapStateToProps, dispatchProps)(UserInputFields);
