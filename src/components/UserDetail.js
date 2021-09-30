@@ -1,19 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 export default function UserDetail() {
+  const [searchInput, setSearchInput] = useState();
   const inputFields = useSelector((state) => state);
-  console.log(inputFields.inputFields, "inputFields");
+  const inputFieldsData = inputFields.inputFields;
+
+  const searchItem = (e) => {
+    console.log(e, "call");
+    const matchValue = inputFieldsData.filter(
+      (item) => item === e.target.value
+    );
+    console.log(matchValue, "matchValue");
+    setSearchInput();
+  };
 
   return (
     <div className="dashbord">
       <NavLink to="/add">
-        <button>Todo List </button>
+        <button className="btn">Todo List </button>
       </NavLink>
+      <div>
+        <input
+          type="text"
+          value={searchInput}
+          onChange={(e) => searchItem(e)}
+        />
+        <button>Search</button>
+      </div>
       <div className="list-data">
-        {inputFields.inputFields.map((data) => {
-          return <p className="data">{data}</p>;
+        {inputFieldsData.map((data, index) => {
+          return (
+            <p key={index} className="data">
+              {data}
+            </p>
+          );
         })}
       </div>
     </div>

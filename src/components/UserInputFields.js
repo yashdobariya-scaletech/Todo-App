@@ -25,7 +25,7 @@ class UserInputFields extends Component {
     const inputFields = [...this.state.inputFields];
     const value = this.state.value;
     this.props.addInputValue(value);
-    inputFields.push(value);
+    inputFields.unshift(value);
     this.setState({
       inputFields,
       value: "",
@@ -40,14 +40,16 @@ class UserInputFields extends Component {
       inputFields,
     });
   };
+
   render() {
     return (
       <div className="dashbord">
-        {console.log(this.props.inputFields)}
         <header>Todo List</header>
         <form>
           <NavLink to="/detail">
-            <button className="btn">See List </button>
+            <button type="button" className="btn">
+              See List
+            </button>
           </NavLink>
           <div className="inputData">
             <input
