@@ -3,7 +3,8 @@ import { ADD_INPUTFIELD_DETAILS } from "../store/action";
 
 const initialSate = { inputFields: [] };
 
-const inputFieldReduser = (state = { initialSate }, action) => {
+const inputFieldReduser = (state = initialSate, action) => {
+  // console.log(action, "type");
   switch (action.type) {
     case ADD_INPUTFIELD_DETAILS:
       return {

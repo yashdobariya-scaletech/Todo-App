@@ -14,25 +14,30 @@ class UserInputFields extends Component {
     };
   }
   updateInputField = (e) => {
+    // e.preventDefault();
+
     this.setState({
       value: e.target.value,
     });
   };
   addInputField = (e) => {
-    e.preventDefault();
     const inputFields = [...this.state.inputFields];
+    console.log(inputFields.length, "inputFields");
     const value = this.state.value;
+    console.log(value, "value");
     this.props.addInputValue(value);
-    console.log(value, "val");
+    // console.log(value, "val");
     inputFields.push(value);
     this.setState({
       inputFields,
       add: false,
+      value: "",
     });
+    console.log(this.props.inputFields, "data");
   };
 
   removeInputField = (index, e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const inputFields = [...this.state.inputFields];
     inputFields.splice(index, 1);
     this.setState({
@@ -61,7 +66,7 @@ class UserInputFields extends Component {
               key={index}
               index={index}
               type="text"
-              value={this.state.value}
+              value={add}
               updateInputField={this.updateInputField}
               removeInputField={this.removeInputField}
               addInputField={this.addInputField}
