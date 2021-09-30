@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+
 import { ADD_INPUTFIELD_DETAILS } from "../store/action";
 import UserInput from "./UserInput";
-import classes from "./UserInputFields.module.css";
 
 class UserInputFields extends Component {
   constructor(props) {
@@ -10,68 +11,66 @@ class UserInputFields extends Component {
     this.state = {
       inputFields: [],
       value: "",
-      add: true,
     };
   }
-  updateInputField = (e) => {
-    // e.preventDefault();
 
+  updateInputField = (e) => {
     this.setState({
       value: e.target.value,
     });
   };
+
   addInputField = (e) => {
+    e.preventDefault();
     const inputFields = [...this.state.inputFields];
-    console.log(inputFields.length, "inputFields");
     const value = this.state.value;
-    console.log(value, "value");
     this.props.addInputValue(value);
-    // console.log(value, "val");
     inputFields.push(value);
     this.setState({
       inputFields,
-      add: false,
       value: "",
     });
-    console.log(this.props.inputFields, "data");
   };
 
   removeInputField = (index, e) => {
-    // e.preventDefault();
+    e.preventDefault();
     const inputFields = [...this.state.inputFields];
     inputFields.splice(index, 1);
     this.setState({
       inputFields,
-      add: true,
     });
   };
   render() {
     return (
-      <div className={classes.dashbord}>
+      <div className="dashbord">
+        {console.log(this.props.inputFields)}
         <header>Todo List</header>
-        <div className={classes.buttonWrap}>
-          <button onClick={this.addInputField}>Add</button>
-        </div>
         <form>
-          <UserInput
-            type="text"
-            value={this.state.value}
-            updateInputField={this.updateInputField}
-            removeInputField={this.removeInputField}
-            addInputField={this.addInputField}
-            addAction={this.state.add}
-          />
-          {this.state.inputFields.map((add, index) => (
-            <UserInput
-              key={index}
-              index={index}
+          <NavLink to="/detail">
+            <button className="btn">See List </button>
+          </NavLink>
+          <div className="inputData">
+            <input
               type="text"
-              value={add}
-              updateInputField={this.updateInputField}
-              removeInputField={this.removeInputField}
-              addInputField={this.addInputField}
+              value={this.state.value}
+              onChange={(e) => this.updateInputField(e)}
             />
-          ))}
+            <button type="submit" onClick={(e) => this.addInputField(e)}>
+              Add
+            </button>
+            {this.state.inputFields.map((add, index) => (
+              <UserInput
+                key={index}
+                index={index}
+                type="text"
+                value={add}
+                updateInputField={this.updateInputField}
+                removeInputField={this.removeInputField}
+                addInputField={this.addInputField}
+                disabled={true}
+              />
+            ))}
+          </div>
         </form>
       </div>
     );

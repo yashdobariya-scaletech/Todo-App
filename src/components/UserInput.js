@@ -1,24 +1,12 @@
 import React from "react";
-import classes from "./UserInput.module.css";
 
 export default function UserInput(props) {
-  // const addButton = <button onClick={props.addInputField}>Add</button>;
-  const removeButton = (
-    <button onClick={(e) => props.removeInputField(props.index, e)}>
-      Remove
-    </button>
-  );
-
-  const addAction = props.addAction;
-
   return (
-    <div className={classes.inputField}>
-      <input
-        type={props.type}
-        value={props.value}
-        onChange={(e) => props.updateInputField(e)}
-      />
-      {!addAction && removeButton}
+    <div className="inputField">
+      <input type={props.type} value={props.value} disabled={props.disabled} />
+      <button onClick={(e) => props.removeInputField(props.index, e)}>
+        Remove
+      </button>
     </div>
   );
 }
