@@ -1,26 +1,44 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { ADD_FILTEREDARRAY } from "../store/action";
 
 export default function UserDetail() {
-  const dispatch = useDispatch();
-
-  const inputFields = useSelector((state) => state);
-  const inputFieldsData = inputFields.inputFields;
-  console.log(inputFieldsData, "inputFieldsData");
+  const [searchInput, setSearchInput] = useState(false);
+  const [filteredList, setfilteredList] = useState([]);
+  const inputFields = useSelector((state) => state.inputFields);
+  console.log(inputFields, "data");
 
   const searchItem = (e) => {
-    const matchValueArray = inputFieldsData.filter((item) =>
+    setSearchInput(true);
+    const matchValueArray = inputFields.filter((item) =>
       item.match(e.target.value.toLowerCase())
     );
-    if (e.target.value !== 0) {
-      console.log("log");
-      dispatch({ type: ADD_FILTEREDARRAY, carsList: matchValueArray });
-    }
-
-    console.log(matchValueArray, "matchValue");
+    setfilteredList(matchValueArray);
   };
+
+  const filteredItemArray = (
+    <div className="list-data">
+      {filteredList.map((data, index) => {
+        return (
+          <p key={index} className="data">
+            {data}
+          </p>
+        );
+      })}
+    </div>
+  );
+
+  const normalItemArray = (
+    <div className="list-data">
+      {inputFields.map((data, index) => {
+        return (
+          <p key={index} className="data">
+            {data}
+          </p>
+        );
+      })}
+    </div>
+  );
 
   return (
     <div className="dashbord">
@@ -28,18 +46,16 @@ export default function UserDetail() {
         <button className="btn">Todo List</button>
       </NavLink>
       <div>
-        <input type="text" onChange={(e) => searchItem(e)} />
+        <input
+          type="text"
+          onChange={(e) => {
+            searchItem(e);
+          }}
+        />
         <button>Search</button>
       </div>
-      <div className="list-data">
-        {inputFieldsData.map((data, index) => {
-          return (
-            <p key={index} className="data">
-              {data}
-            </p>
-          );
-        })}
-      </div>
+      {!searchInput && normalItemArray}
+      {searchInput && filteredItemArray}
     </div>
   );
 }

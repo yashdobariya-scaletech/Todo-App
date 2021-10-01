@@ -13,7 +13,6 @@ const inputFieldReduser = (state = initialSate, action) => {
       };
 
     case ADD_FILTEREDARRAY:
-      console.log("call");
       return {
         ...state,
         inputFields: action.carsList,
