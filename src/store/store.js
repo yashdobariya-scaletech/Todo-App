@@ -1,10 +1,10 @@
 import { createStore } from "redux";
-import { ADD_INPUTFIELD_DETAILS } from "../store/action";
+import { ADD_INPUTFIELD_DETAILS, ADD_FILTEREDARRAY } from "../store/action";
 
 const initialSate = { inputFields: [] };
 
 const inputFieldReduser = (state = initialSate, action) => {
-  // console.log(action, "type");
+  console.log(action, "type");
   switch (action.type) {
     case ADD_INPUTFIELD_DETAILS:
       return {
@@ -12,6 +12,12 @@ const inputFieldReduser = (state = initialSate, action) => {
         inputFields: [...state.inputFields, action.value],
       };
 
+    case ADD_FILTEREDARRAY:
+      console.log("call");
+      return {
+        ...state,
+        inputFields: action.carsList,
+      };
     default:
       return state;
   }

@@ -1,28 +1,31 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { ADD_FILTEREDARRAY } from "../store/action";
 
 export default function UserDetail() {
-  // const [searchInput, setSearchInput] = useState();
+  const dispatch = useDispatch();
+
   const inputFields = useSelector((state) => state);
   const inputFieldsData = inputFields.inputFields;
-
-  // const regex = /[A-Z,a-z]/g;
+  console.log(inputFieldsData, "inputFieldsData");
 
   const searchItem = (e) => {
-    console.log(e, "call");
     const matchValueArray = inputFieldsData.filter((item) =>
       item.match(e.target.value.toLowerCase())
     );
-    const matchItem = matchValueArray;
-    console.log(matchItem, "matchItem");
+    if (e.target.value !== 0) {
+      console.log("log");
+      dispatch({ type: ADD_FILTEREDARRAY, carsList: matchValueArray });
+    }
+
     console.log(matchValueArray, "matchValue");
   };
 
   return (
     <div className="dashbord">
       <NavLink to="/add">
-        <button className="btn">Todo List </button>
+        <button className="btn">Todo List</button>
       </NavLink>
       <div>
         <input type="text" onChange={(e) => searchItem(e)} />
