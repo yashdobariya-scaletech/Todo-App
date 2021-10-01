@@ -2,6 +2,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import "./App.css";
 import UserInputFields from "./components/UserInputFields";
 import UserDetail from "./components/UserDetail";
+import Example from "./components/Example";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/detail" component={UserDetail} />
         <Redirect to="/add" />
       </Switch>
+      {/* <Example /> */}
     </div>
   );
 }
